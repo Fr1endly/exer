@@ -1,7 +1,7 @@
 import React from 'react';
 import { Paper, Tabs, Tab } from '@material-ui/core';
 
-export default props =>
+export default ({ muscles }) =>
     <div>
         <Paper square>
             <Tabs
@@ -9,9 +9,10 @@ export default props =>
                 textColor="primary"
                 centered
             >
-                <Tab label="Active" />
-                <Tab label="Disabled" disabled />
-                <Tab label="Active" />
+            <Tab label="All" />
+            {muscles.map( i => 
+                <Tab label={i} />
+            )}
             </Tabs>
         </Paper>
     </div> 
