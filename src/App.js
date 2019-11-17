@@ -15,16 +15,13 @@ export default class extends Component {
       const { muscles } = i;// muscles: shoulders etc
       sortedExercises[ muscles ] = sortedExercises[ i ]
         ? [...sortedExercises[muscles], i]
-        : [ i ] 
-      console.log(sortedExercises[ i ])
+        : [ i ]   
       return sortedExercises
     }, {})) 
   }
 
   handleSelectedCategory = category => {
-    this.setState({
-      category
-    })
+    this.setState({category})
   }  
 
   
@@ -37,6 +34,7 @@ export default class extends Component {
     return <Fragment>
             <Header />
             <Exercises
+              category={category}
               exercises={exercises} 
               /> 
             <Footer

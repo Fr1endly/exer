@@ -2,12 +2,13 @@ import React from 'react';
 import { Paper, Tabs, Tab } from '@material-ui/core';
 
 export default ({ muscles, category, onSelect }) =>{
-    const index = category ? muscles.findIndex(group => group===category) + 1 : 0
+    const index = category
+        ? muscles.findIndex( element => element===category ) + 1 
+        : 0
 
     const onIndexSelect = (e, index) => 
         onSelect(index===0 ? '' : muscles[index-1])
     
-
     return <Paper square>
             <Tabs
                 value={index}
@@ -16,7 +17,8 @@ export default ({ muscles, category, onSelect }) =>{
                 textColor="primary"
                 centered
             >
-                <Tab label="All" />
+                 <Tab label="All" />
+
                 {muscles.map( i => 
                     <Tab label={i} />
                 )}
