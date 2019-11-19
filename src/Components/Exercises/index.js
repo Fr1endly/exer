@@ -12,11 +12,20 @@ const styles = {
     }
 }
 
-export default ({ exercises, category })  => 
+export default ({
+    exercises,
+    category,
+    onSelect,
+    exercise: {
+        id,
+        title ,
+        description
+    }
+}) => 
     <Grid container >
         <Grid item sm>
             <Paper style={ styles.Paper}>
-                {exercises.map(( [ group, exercises ] )=>
+                {exercises.map( ( [ group, exercises ] )=> 
                     !category || category===group
                         ? <Fragment>
                             <Typography
@@ -26,16 +35,18 @@ export default ({ exercises, category })  =>
                                 {group}
                             </Typography>
                             <List component="ul">
-                                {exercises.map( ({ title })=>
+                                {exercises.map( ({ id, title })=>
                                     <ListItem button>
-                                        <ListItemText primary={title}/>
+                                        <ListItemText 
+                                            primary={title}
+                                            onClick={()=> onSelect(id) }    
+                                        />
                                     </ListItem>
                                 )}
                             </List>
-                         </Fragment>
+                            </Fragment>
                         : null
                 )}
-                
             </Paper>
         </Grid>
         <Grid item sm>
@@ -43,13 +54,14 @@ export default ({ exercises, category })  =>
                 <Typography
                 variant='h2' gutterBottom
                 >
-                    Welcome!
+                    {title}
                 </Typography>
                 <Typography
                 variant='subtitle1' gutterBottom 
                 style={{ marginTop: 20 }}
                 >
-                    Please select an excercise from the list on left.
+                    {console.log(title, description)}
+                    {description}
                 </Typography>
             </Paper>
         </Grid>
