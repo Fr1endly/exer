@@ -1,15 +1,15 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
-import  CreateDialog  from '../Exercises/dialogs/create';
+import  CreateDialog  from '../Exercises/Dialogs/create';
 
-export default props =>
+export default ({ muscles }) =>
     <div>
         <AppBar position="static">
             <Toolbar>
                 <Typography variant='h5' style={{ flex: 1 }}> 
                     Exercises
                 </Typography>
-                <CreateDialog/>
+                <CreateDialog muscles={muscles}/>
             </Toolbar>
         </AppBar>
     </div>   
