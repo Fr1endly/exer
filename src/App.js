@@ -49,7 +49,6 @@ export default class extends Component {
               muscles={muscles}
               onSelect={this.handleSelectedCategory}
             />
-            {console.log(this.state)}
           </Fragment>
 
   }

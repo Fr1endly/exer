@@ -20,7 +20,7 @@ export default ({ muscles, category, onSelect }) =>{
                  <Tab label="All" />
 
                 {muscles.map( i => 
-                    <Tab label={i} />
+                    <Tab label={i} key={i}/>
                 )}
             </Tabs>
         </Paper>
