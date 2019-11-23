@@ -5,21 +5,24 @@ import { muscles, exercises } from './store';
 import './App.css';
 
 export default class extends Component {
+  
   state = {
     exercises,// [{}, {}, {}]
     exercise: {}
   }
-     
 
   getExercisesByMuscles() {
     // returns [ "muscle", [exercisesObject]]
-    return Object.entries(this.state.exercises.reduce((sortedExercises, i) => {
-      const { muscles } = i;// muscles: shoulders etc
-      sortedExercises[ muscles ] = sortedExercises[ i ]
-        ? [...sortedExercises[muscles], i]
-        : [ i ]   
-      return sortedExercises
-    }, {})) 
+    return Object.entries(
+      this.state.exercises.reduce((exercises, i) => {
+        const { muscles } = i;// muscles: shoulders etc
+
+      exercises[ muscles ] = exercises[ muscles ]
+        ? [...exercises[muscles], i]
+        : [ i ]
+      return exercises
+    }, {})
+    )
   }
 
   handleSelectedCategory = category => {
@@ -31,6 +34,15 @@ export default class extends Component {
       exercise:  exercises.find( i => i.id === id )
     }))
   }
+
+  handleCreateExercise = exercise => {
+      this.setState(({ exercises }) => ({
+      exercises: [
+        ...exercises,
+        exercise
+      ]
+    }))
+  }
   
   render () {
     const exercises = this.getExercisesByMuscles(),
@@ -39,6 +51,7 @@ export default class extends Component {
     return <Fragment>
             <Header
               muscles={muscles}
+              onCreateExercise={this.handleCreateExercise}
             />
             <Exercises
               exercise={exercise}
