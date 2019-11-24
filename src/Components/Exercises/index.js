@@ -1,7 +1,15 @@
 import React, { Fragment } from 'react';
-import { Grid, Paper, Typography, List,
-         ListItem, ListItemText } from '@material-ui/core';
-
+import { 
+    Grid,
+    Paper,
+    Typography,
+    List,
+    ListItem,
+    ListItemText,
+    ListItemSecondaryAction,
+    IconButton
+} from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const styles = {
     Paper: {
@@ -20,50 +28,55 @@ export default ({
         id,
         title ,
         description
-    }
-}) => 
-    <Grid container >
-        <Grid item sm>
-            <Paper style={ styles.Paper}>
-                {exercises.map( ( [ group, exercises ] )=> 
-                    !category || category===group
-                        ? <Fragment
-                            key={group}
+    },
+    onDelete
+}) => <Grid container >
+    <Grid item sm>
+        <Paper style={ styles.Paper}>
+            {exercises.map( ( [ group, exercises ] )=> 
+                !category || category===group
+                    ? <Fragment
+                        key={group}
+                    >
+                        <Typography
+                            variant="h4"
+                            style={{textTransform: "capitalize"}}
                         >
-                            <Typography
-                                variant="h4"
-                                style={{textTransform: "capitalize"}}
-                            >
-                                {group}
-                            </Typography>
-                            <List component="ul">
-                                {exercises.map( ({ id, title })=>
-                                    <ListItem button key={ id }>
-                                        <ListItemText 
-                                            primary={title}
-                                            onClick={()=> onSelect(id) }    
-                                        />
-                                    </ListItem>
-                                )}
-                            </List>
-                            </Fragment>
-                        : null
-                )}
-            </Paper>
-        </Grid>
-        <Grid item sm>
-            <Paper style={ styles.Paper}>
-                <Typography
-                variant='h2' gutterBottom
-                >
-                    {title}
-                </Typography>
-                <Typography
-                variant='subtitle1' gutterBottom 
-                style={{ marginTop: 20 }}
-                >
-                    {description}
-                </Typography>
-            </Paper>
-        </Grid>
+                            {group}
+                        </Typography>
+                        <List component="ul">
+                            {exercises.map( ({ id, title })=>
+                                <ListItem button key={ id } onClick={ ()=> onSelect(id) }>
+                                    <ListItemText 
+                                        primary={title}
+
+                                    />
+                                    <ListItemSecondaryAction>
+                                        <IconButton onClick={ ()=>onDelete(id)}>
+                                            <DeleteIcon/>
+                                        </IconButton>
+                                    </ListItemSecondaryAction>
+                                </ListItem>
+                            )}
+                        </List>
+                        </Fragment>
+                    : null
+            )}
+        </Paper>
     </Grid>
+    <Grid item sm>
+        <Paper style={ styles.Paper}>
+            <Typography
+            variant='h2' gutterBottom
+            >
+                {title}
+            </Typography>
+            <Typography
+            variant='subtitle1' gutterBottom 
+            style={{ marginTop: 20 }}
+            >
+                {description}
+            </Typography>
+        </Paper>
+    </Grid>
+</Grid>
