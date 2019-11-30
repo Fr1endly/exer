@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import Form from './Form';
 import { 
     Grid,
     Paper,
@@ -10,6 +11,7 @@ import {
     IconButton
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 const styles = {
     Paper: {
@@ -21,16 +23,22 @@ const styles = {
 }
 
 export default ({
-    exercises,
-    category,
-    onSelect,
-    exercise: {
-        id,
-        title ,
-        description
-    },
-    onDelete
-}) => <Grid container >
+        exercises,
+        muscles,
+        category,
+        onSelect,
+        exercise,
+        exercise: {
+            id,
+            title='Welcome',
+            description="Please select exercise on the left."
+        },// nested destructring
+        onDelete,
+        editMode,
+        onSelectEdit,
+        onEdit
+    }) =>
+<Grid container >
     <Grid item sm>
         <Paper style={ styles.Paper}>
             {exercises.map( ( [ group, exercises ] )=> 
@@ -55,6 +63,9 @@ export default ({
                                         <IconButton onClick={ ()=>onDelete(id)}>
                                             <DeleteIcon/>
                                         </IconButton>
+                                        <IconButton onClick={ ()=>onSelectEdit(id)}>
+                                            <EditIcon/>
+                                        </IconButton>
                                     </ListItemSecondaryAction>
                                 </ListItem>
                             )}
@@ -66,6 +77,14 @@ export default ({
     </Grid>
     <Grid item sm>
         <Paper style={ styles.Paper}>
+        {editMode?
+            <Form
+                muscles={muscles}
+                exercise={exercise}
+                onSubmit={onEdit}
+            />
+        :
+        <Fragment>
             <Typography
             variant='h2' gutterBottom
             >
@@ -77,6 +96,9 @@ export default ({
             >
                 {description}
             </Typography>
+        </Fragment>
+        }
+
         </Paper>
     </Grid>
 </Grid>
