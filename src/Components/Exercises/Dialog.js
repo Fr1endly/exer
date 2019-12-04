@@ -5,7 +5,6 @@ import {
     DialogContentText,
     DialogTitle,
     Fab,
-    Button
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import Form from "./Form"
@@ -37,8 +36,14 @@ export default class extends Component {
                 <Fab size='small' color="secondary" onClick={this.handleToggle} >
                     <AddIcon />
                 </Fab>
-                <Dialog open={open} onClose={this.handleToggle} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">
+                <Dialog 
+                    open={open}
+                    onClose={this.handleToggle}
+                    aria-labelledby="form-dialog-title"
+                    fullWidth
+                    maxWidth='xs'
+                >
+                <DialogTitle>
                     Create new exercise
                 </DialogTitle>
                 <DialogContent> 

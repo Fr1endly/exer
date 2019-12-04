@@ -7,16 +7,9 @@ import {
     MenuItem,
     Button
 } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/Styles"
 
 
-const styles = theme => ({
-  FormControl: {
-    width: '100%'
-  }
-})
-
-export default withStyles(styles)(class extends Component {
+export default class extends Component {
     state = this.getInitState()
 
     getInitState() {
@@ -27,12 +20,6 @@ export default withStyles(styles)(class extends Component {
         description: '',
         muscles: ''
         }
-    }
-
-    componentWillReceiveProps({ exercise }) {
-        this.setState({
-            ...exercise
-        })
     }
 
     handleChange = name => ({ target: { value }}) => 
@@ -47,13 +34,11 @@ export default withStyles(styles)(class extends Component {
         id: this.state.title.toLocaleLowerCase().replace(/ /g, '-'),
         ...this.state
         })
-
-        this.setState(this.getInitState())
     }
 
     render() {
         const { title, description, muscles } = this.state;
-        const { muscles: categories, classes, exercise } = this.props;
+        const { muscles: categories, exercise } = this.props;
 
         return <form>
     <Fragment>
@@ -63,7 +48,7 @@ export default withStyles(styles)(class extends Component {
             margin="normal"
             value={ title }
             onChange={this.handleChange('title')}//32 [name]
-            className={ classes.FormControl }
+            fullWidth
         />
         <br/>
         <TextField
@@ -74,10 +59,10 @@ export default withStyles(styles)(class extends Component {
             margin="normal"
             value={ description }
             onChange={this.handleChange('description')}//32 [name]
-            className={ classes.FormControl}
+            fullWidth
         />
         <br/>
-        <FormControl className={ classes.FormControl } >
+        <FormControl fullWidth>
             <InputLabel htmlFor="muscles">
                 Muscles
             </InputLabel>
@@ -96,10 +81,11 @@ export default withStyles(styles)(class extends Component {
         <Button
             color="primary"
             onClick={ this.handleSubmit }
+            disabled={!title || !muscles}
         >
         {exercise ? 'Edit' : 'Create'}
         </Button>
     </Fragment>
     </form>
     }
-}) 
+}

@@ -3,6 +3,8 @@ import { Header, Footer } from './Components/Layouts';
 import Exercises from './Components/Exercises'
 import { muscles, exercises } from './store';
 import './App.css';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
 
 export default class extends Component {
   
@@ -18,7 +20,6 @@ export default class extends Component {
        ...exercises,
        [category]: []
     }), {})
-    console.log(initExercises)
     return Object.entries(
       this.state.exercises.reduce((exercises, i) => {
         const { muscles } = i; // muscles: shoulders etc
@@ -46,8 +47,10 @@ export default class extends Component {
     }))
   
   handleDeleteExercise = id => 
-    this.setState( ({ exercises })=> ({
-      exercises: exercises.filter(ex => ex.id !== id)
+    this.setState( ({ exercises, exercise, editMode })=> ({
+      exercises: exercises.filter(ex => ex.id !== id),
+      editMode: exercise.id === id ? false : editMode,
+      exercise: exercise.id === id ? {} : exercise
     }))
 
 
@@ -63,7 +66,9 @@ export default class extends Component {
       exercises: [
         ...exercises.filter(ex => ex.id !== exercise.id),
         exercise
-      ] 
+      ],
+      exercise: {},
+      editMode: false
     }))
   
   render () {
@@ -71,27 +76,27 @@ export default class extends Component {
       { category, exercise, editMode} = this.state;
 
     return <Fragment>
-            <Header
-              muscles={muscles}
-              onCreateExercise={this.handleCreateExercise}
-            />
-            <Exercises
-              editMode={editMode}
-              exercise={exercise}
-              category={category}
-              exercises={exercises}
-              muscles={muscles}
-              onSelect={this.handleSelectedExercise}
-              onDelete={this.handleDeleteExercise}
-              onSelectEdit={this.handleEditSelectExercise}
-              onEdit={this.handleEditExercise}
-              /> 
-            <Footer
-              category={category}
-              muscles={muscles}
-              onSelect={this.handleSelectedCategory}
-            />
+              <CssBaseline/>
+              <Header
+                muscles={muscles}
+                onCreateExercise={this.handleCreateExercise}
+              />
+              <Exercises
+                editMode={editMode}
+                exercise={exercise}
+                category={category}
+                exercises={exercises}
+                muscles={muscles}
+                onSelect={this.handleSelectedExercise}
+                onDelete={this.handleDeleteExercise}
+                onSelectEdit={this.handleEditSelectExercise}
+                onEdit={this.handleEditExercise}
+                /> 
+              <Footer
+                category={category}
+                muscles={muscles}
+                onSelect={this.handleSelectedCategory}
+              />
           </Fragment>
-
   }
 }

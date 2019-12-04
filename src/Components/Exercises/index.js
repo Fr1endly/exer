@@ -12,17 +12,19 @@ import {
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import { withStyles } from "@material-ui/core/Styles"
 
-const styles = {
+const styles = theme => ({
     Paper: {
         padding: 20,
-        margin: '10 auto 10 auto',
+        margintop: 5,
         overflowY: 'auto',
-        height: 500,
+        height: 500
     }
-}
+})
 
-export default ({
+export default withStyles(styles)(({
+        classes,
         exercises,
         muscles,
         category,
@@ -39,8 +41,8 @@ export default ({
         onEdit
     }) =>
 <Grid container >
-    <Grid item sm>
-        <Paper style={ styles.Paper}>
+    <Grid item sm={6} xs={12}>
+        <Paper className={ classes.Paper}>
             {exercises.map( ( [ group, exercises ] )=> 
                 !category || category===group
                     ? <Fragment
@@ -75,30 +77,32 @@ export default ({
             )}
         </Paper>
     </Grid>
-    <Grid item sm>
-        <Paper style={ styles.Paper}>
-        {editMode?
-            <Form
-                muscles={muscles}
-                exercise={exercise}
-                onSubmit={onEdit}
-            />
-        :
-        <Fragment>
+    <Grid item sm={6} xs={12}>
+        <Paper className={ classes.Paper}>
             <Typography
-            variant='h2' gutterBottom
+                variant='h2'
+                gutterBottom
             >
                 {title}
             </Typography>
-            <Typography
-            variant='subtitle1' gutterBottom 
-            style={{ marginTop: 20 }}
-            >
-                {description}
-            </Typography>
-        </Fragment>
-        }
-
+            {editMode?
+                <Form
+                    key={id}
+                    muscles={muscles}
+                    exercise={exercise}
+                    onSubmit={onEdit}
+                />
+            :
+                <Fragment>
+                    <Typography
+                        variant='subtitle1' 
+                        style={{ marginTop: 20 }}
+                    >
+                        {description}
+                    </Typography>
+                </Fragment>
+            }
         </Paper>
     </Grid>
 </Grid>
+)
